@@ -1,0 +1,43 @@
+---
+import { navItems, site, whatsappLink } from '../data/site';
+
+const { pathname } = Astro.url;
+---
+
+<header class="sticky top-0 z-40 border-b border-white/10 bg-ink text-paper">
+  <div class="mx-auto flex max-w-site items-center justify-between gap-4 px-4 py-3">
+    <a href="/" class="flex flex-col leading-tight">
+      <span class="font-display text-lg font-semibold">{site.name}</span>
+      <span class="text-xs text-brass">Multi-brand car care · {site.areas.join(' · ')}</span>
+    </a>
+
+    <nav aria-label="Primary" class="hidden items-center gap-6 lg:flex">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          aria-current={pathname.startsWith(item.href) ? 'page' : undefined}
+          class="text-sm text-paper/80 transition hover:text-brass aria-[current=page]:text-brass"
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href={`tel:${site.phone}`}
+        class="hidden rounded-full border border-brass px-4 py-2 text-sm font-medium text-brass transition hover:bg-brass hover:text-ink sm:inline-flex"
+      >
+        Call
+      </a>
+      <a
+        href={whatsappLink()}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex rounded-full bg-brass px-4 py-2 text-sm font-semibold text-ink transition hover:bg-brass-deep"
+      >
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</header>

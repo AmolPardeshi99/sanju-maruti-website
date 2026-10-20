@@ -1,0 +1,26 @@
+---
+import { site, whatsappLink } from '../data/site';
+
+const items = [
+  { href: `tel:${site.phone}`, label: 'Call', external: false },
+  { href: whatsappLink(), label: 'WhatsApp', external: true },
+  { href: site.mapsUrl, label: 'Directions', external: true },
+];
+---
+
+<nav
+  aria-label="Quick actions"
+  class="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-white/10 bg-ink text-paper md:hidden"
+  style="padding-bottom: env(safe-area-inset-bottom);"
+>
+  {items.map((item) => (
+    <a
+      href={item.href}
+      target={item.external ? '_blank' : undefined}
+      rel={item.external ? 'noopener' : undefined}
+      class="flex min-h-14 items-center justify-center text-sm font-medium transition hover:text-brass"
+    >
+      {item.label}
+    </a>
+  ))}
+</nav>

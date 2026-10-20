@@ -1,0 +1,34 @@
+---
+import { navItems, site } from '../data/site';
+---
+
+<footer class="bg-ink text-paper/80">
+  <div class="mx-auto grid max-w-site gap-8 px-4 py-12 md:grid-cols-3">
+    <div>
+      <p class="font-display text-xl text-paper">{site.name}</p>
+      <p class="mt-2 text-sm">{site.address.line}</p>
+      <p class="text-sm">{site.address.city}, {site.address.region}</p>
+    </div>
+
+    <div class="text-sm">
+      <p class="font-semibold text-paper">Contact</p>
+      <p class="mt-2">
+        <a href={`tel:${site.phone}`} class="hover:text-brass">{site.phoneDisplay}</a>
+      </p>
+      <p class="mt-1">{site.hours}</p>
+    </div>
+
+    <nav aria-label="Footer" class="text-sm">
+      <p class="font-semibold text-paper">Explore</p>
+      <ul class="mt-2 grid grid-cols-2 gap-2">
+        {navItems.map((item) => (
+          <li><a href={item.href} class="hover:text-brass">{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="border-t border-white/10 px-4 py-4 text-center text-xs text-paper/60">
+    © {new Date().getFullYear()} {site.name}. Prices are approximate; final quote after inspection.
+  </div>
+</footer>

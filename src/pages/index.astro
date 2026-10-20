@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site, whatsappLink } from '../data/site';
+---
+
+<Layout
+  title={`${site.name} | Multi-brand car service in Jalgaon`}
+  description={`Multi-brand car service, washing, detailing and ceramic coating in ${site.areas.join(', ')}. Book on WhatsApp.`}
+>
+  <section class="bg-ink text-paper">
+    <div class="mx-auto max-w-site px-4 py-20 md:py-28">
+      <p class="text-sm uppercase tracking-[0.2em] text-brass">Jalgaon · Pachora · Chalisgaon · Bhadgaon</p>
+      <h1 class="mt-4 max-w-3xl text-4xl font-semibold leading-tight md:text-6xl">
+        Premium car care for every brand, including luxury.
+      </h1>
+      <p class="mt-6 max-w-xl text-lg text-paper/80">
+        Periodic service, washing, detailing and ceramic coating, with transparent pricing and a quote before any work starts.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a href={whatsappLink()} target="_blank" rel="noopener" class="rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep">
+          Book on WhatsApp
+        </a>
+        <a href={`tel:${site.phone}`} class="rounded-full border border-brass px-6 py-3 font-semibold text-brass hover:bg-brass hover:text-ink">
+          Call {site.phoneDisplay}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-site px-4 py-16">
+    <p class="text-sm text-muted">Phase 0 placeholder. Services, brands, pricing and reviews come in Phase 1 and 2.</p>
+  </section>
+</Layout>
