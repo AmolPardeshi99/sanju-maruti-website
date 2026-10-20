@@ -22,8 +22,15 @@ export const site = {
 export const whatsappLink = (message = `Hi, I'd like to book a service at ${site.name}.`) =>
   `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
 
+export const mapEmbedUrl =
+  'https://www.google.com/maps?q=' +
+  encodeURIComponent('Sanju Maruti Services, Anturli Rd, Jargaon, Pachora, Maharashtra 424201') +
+  '&output=embed';
+
+// Anchors on the home page. Section ids match the sections in index.astro.
 export const navItems = [
-  { href: '/services', label: 'Services' },
-  { href: '/brands', label: 'Brands' },
-  { href: '/contact', label: 'Contact' },
+  { id: 'services', label: 'Services' },
+  { id: 'brands', label: 'Brands' },
+  { id: 'gallery', label: 'Gallery' },
+  { id: 'contact', label: 'Contact' },
 ] as const;

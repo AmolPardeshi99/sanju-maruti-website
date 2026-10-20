@@ -1,7 +1,5 @@
 ---
 import { navItems, site, whatsappLink } from '../data/site';
-
-const { pathname } = Astro.url;
 ---
 
 <header class="sticky top-0 z-40 border-b border-white/10 bg-ink text-paper">
@@ -11,12 +9,12 @@ const { pathname } = Astro.url;
       <span class="text-xs text-brass">Multi-brand car care · {site.areas.join(' · ')}</span>
     </a>
 
-    <nav aria-label="Primary" class="hidden items-center gap-6 lg:flex">
+    <nav aria-label="Sections" class="hidden items-center gap-7 lg:flex">
       {navItems.map((item) => (
         <a
-          href={item.href}
-          aria-current={pathname.startsWith(item.href) ? 'page' : undefined}
-          class="text-sm text-paper/80 transition hover:text-brass aria-[current=page]:text-brass"
+          href={`/#${item.id}`}
+          data-nav-link={item.id}
+          class="relative text-sm text-paper/75 transition hover:text-brass aria-[current=true]:text-brass aria-[current=true]:after:absolute aria-[current=true]:after:-bottom-1.5 aria-[current=true]:after:left-0 aria-[current=true]:after:h-px aria-[current=true]:after:w-full aria-[current=true]:after:bg-brass"
         >
           {item.label}
         </a>
@@ -40,4 +38,39 @@ const { pathname } = Astro.url;
       </a>
     </div>
   </div>
+
+  <nav aria-label="Sections on mobile" class="scrollbar-none flex gap-2 overflow-x-auto border-t border-white/10 px-4 py-2 lg:hidden">
+    {navItems.map((item) => (
+      <a
+        href={`/#${item.id}`}
+        data-nav-link={item.id}
+        class="shrink-0 rounded-full border border-white/15 px-4 py-1.5 text-xs font-medium text-paper/75 transition aria-[current=true]:border-brass aria-[current=true]:bg-brass aria-[current=true]:text-ink"
+      >
+        {item.label}
+      </a>
+    ))}
+  </nav>
 </header>
+
+<script>
+  const sections = Array.from(document.querySelectorAll('section[data-spy]'));
+
+  const setActive = (id) => {
+    document.querySelectorAll('[data-nav-link]').forEach((link) => {
+      if (link.dataset.navLink === id) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+  };
+
+  if (sections.length && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      },
+      { rootMargin: '-40% 0px -55% 0px' },
+    );
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>

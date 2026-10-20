@@ -1,14 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PriceNote from '../components/PriceNote.astro';
-import { site, whatsappLink } from '../data/site';
-import { featuredServices } from '../data/services';
+import { site, whatsappLink, mapEmbedUrl } from '../data/site';
+import { services } from '../data/services';
+import { brandGroups } from '../data/brands';
 
 const photos = [
   { src: '/images/shop-signboard.webp', alt: 'Sanju Maruti Services signboard with Tata Motors original parts board' },
   { src: '/images/shop-front-wide.webp', alt: 'Sanju Maruti Services workshop front with cars parked outside' },
   { src: '/images/shop-front-tata.webp', alt: 'Sanju Maruti Services shop front' },
   { src: '/images/shop-balloon-sign.webp', alt: 'Sanju Maruti Services entrance with decorated arch' },
+  { src: '/images/shop-balloon-arch.webp', alt: 'Cars parked under the decorated arch at Sanju Maruti Services' },
 ];
 
 const steps = [
@@ -30,23 +31,17 @@ const trust = [
   title={`${site.name} | Multi-brand car service in Jalgaon`}
   description={`Multi-brand car service, washing, detailing and ceramic coating in ${site.areas.join(', ')}. Book on WhatsApp.`}
 >
-  <section class="relative overflow-hidden bg-ink text-paper">
+  <section id="top" class="relative overflow-hidden bg-ink text-paper">
     <div class="mx-auto grid max-w-site items-center gap-12 px-4 py-20 md:grid-cols-2 md:py-28">
       <div>
         <p class="text-xs uppercase tracking-[0.25em] text-brass">Jalgaon · Pachora · Chalisgaon · Bhadgaon</p>
-        <h1 class="mt-5 text-4xl font-semibold leading-[1.08] md:text-6xl">
-          Premium care for every car, every brand.
-        </h1>
+        <h1 class="mt-5 text-4xl font-semibold leading-[1.08] md:text-6xl">Premium care for every car, every brand.</h1>
         <p class="mt-6 max-w-md text-base leading-relaxed text-paper/75 md:text-lg">
           Service, washing, detailing and ceramic coating for everyday cars and luxury models, from our workshop on Anturli Road, Pachora.
         </p>
         <div class="mt-10 flex flex-wrap gap-3">
-          <a href={whatsappLink()} target="_blank" rel="noopener" class="rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-ink transition hover:bg-brass-deep">
-            Book on WhatsApp
-          </a>
-          <a href={`tel:${site.phone}`} class="rounded-full border border-paper/30 px-7 py-3.5 text-sm font-semibold text-paper transition hover:border-brass hover:text-brass">
-            Call {site.phoneDisplay}
-          </a>
+          <a href={whatsappLink()} target="_blank" rel="noopener" class="rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-ink transition hover:bg-brass-deep">Book on WhatsApp</a>
+          <a href={`tel:${site.phone}`} class="rounded-full border border-paper/30 px-7 py-3.5 text-sm font-semibold text-paper transition hover:border-brass hover:text-brass">Call {site.phoneDisplay}</a>
         </div>
       </div>
       <figure class="relative">
@@ -62,65 +57,125 @@ const trust = [
     </ul>
   </section>
 
-  <section class="mx-auto max-w-site px-4 py-16">
-    <div class="flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <p class="text-sm uppercase tracking-[0.2em] text-brass-deep">Services</p>
-        <h2 class="mt-2 text-3xl font-semibold md:text-4xl">What we do best</h2>
-      </div>
-      <a href="/services" class="text-sm font-semibold text-brass-deep underline">See all services</a>
-    </div>
+  <section id="services" data-spy class="scroll-mt-36 bg-paper">
+    <div class="mx-auto max-w-site px-4 py-20">
+      <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">Services</p>
+      <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Everything your car needs, in one place.</h2>
+      <p class="mt-4 max-w-2xl text-muted">From routine service to coating and repairs, handled by a team that treats every car like its own.</p>
 
-    <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {featuredServices.map((s) => (
-        <li>
-          <a href={`/services/${s.slug}`} class="block h-full rounded-xl border border-ink/10 bg-white p-6 transition hover:border-brass">
-            <h3 class="text-xl font-semibold">{s.name}</h3>
-            <p class="mt-2 text-sm text-muted">{s.summary}</p>
-            <div class="mt-4"><PriceNote /></div>
-          </a>
-        </li>
-      ))}
-    </ul>
+      <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {services.map((s) => (
+          <li>
+            <a href={`/services/${s.slug}`} class="group block h-full rounded-2xl border border-ink/10 bg-white p-6 transition duration-300 hover:-translate-y-0.5 hover:border-brass hover:shadow-lg">
+              <h3 class="text-xl font-semibold">{s.name}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{s.summary}</p>
+              <p class="mt-5 text-sm font-medium text-brass-deep">Quote after inspection →</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="brands" data-spy class="scroll-mt-36 bg-white">
+    <div class="mx-auto max-w-site px-4 py-20">
+      <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">Brands</p>
+      <h2 class="mt-3 text-3xl font-semibold md:text-4xl">One workshop for every badge on the road.</h2>
+      <p class="mt-4 max-w-2xl text-muted">From the car you drive every day to the luxury model you are proud of. Not sure your brand is listed? Ask us.</p>
+
+      <div class="mt-12 space-y-14">
+        {brandGroups.map((group) => (
+          <div>
+            <h3 class="text-xl font-semibold">{group.segment}</h3>
+            <p class="mt-1 text-sm text-muted">{group.blurb}</p>
+            <ul class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {group.brands.map((brand) => (
+                <li class="flex min-h-24 flex-col items-center justify-center gap-3 rounded-2xl border border-ink/10 bg-paper/50 px-4 py-5 text-center transition hover:border-brass">
+                  {brand.logo ? (
+                    <img src={brand.logo} alt={`${brand.name} logo`} width="120" height="48" loading="lazy" class="h-10 w-auto max-w-[120px] object-contain transition duration-300 hover:scale-105" />
+                  ) : null}
+                  <span class={brand.logo ? 'text-sm font-medium text-muted' : 'py-3 font-semibold'}>{brand.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
   </section>
 
   <section class="bg-paper">
-    <div class="mx-auto max-w-site px-4 py-16">
-      <p class="text-sm uppercase tracking-[0.2em] text-brass-deep">How it works</p>
-      <h2 class="mt-2 text-3xl font-semibold md:text-4xl">Simple, from first message to finished car</h2>
-      <ol class="mt-10 grid gap-6 md:grid-cols-4">
+    <div class="mx-auto max-w-site px-4 py-20">
+      <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">How it works</p>
+      <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Simple, from first message to finished car.</h2>
+      <ol class="mt-12 grid gap-6 md:grid-cols-4">
         {steps.map((step, i) => (
-          <li class="rounded-xl bg-white p-6">
+          <li class="rounded-2xl bg-white p-6 shadow-sm">
             <span class="font-display text-3xl text-brass-deep">0{i + 1}</span>
             <h3 class="mt-3 text-lg font-semibold">{step.title}</h3>
-            <p class="mt-2 text-sm text-muted">{step.text}</p>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{step.text}</p>
           </li>
         ))}
       </ol>
     </div>
   </section>
 
-  <section class="mx-auto max-w-site px-4 py-16">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {photos.map((photo) => (
-        <figure class="overflow-hidden rounded-xl bg-ink-2">
-          <img src={photo.src} alt={photo.alt} width="1360" height="740" loading="lazy" class="aspect-[4/3] w-full object-cover" />
-        </figure>
-      ))}
+  <section id="gallery" data-spy class="scroll-mt-36 bg-white">
+    <div class="mx-auto max-w-site px-4 py-20">
+      <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">Gallery</p>
+      <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Our workshop, Anturli Road.</h2>
+      <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {photos.map((photo) => (
+          <figure class="overflow-hidden rounded-2xl bg-ink-2">
+            <img src={photo.src} alt={photo.alt} width="1360" height="740" loading="lazy" class="aspect-[4/3] w-full object-cover transition duration-500 hover:scale-[1.03]" />
+          </figure>
+        ))}
+      </div>
     </div>
-    <p class="mt-3 text-sm text-muted">Our workshop on Anturli Road, Jargaon, Pachora.</p>
   </section>
 
-  <section class="bg-ink text-paper">
+  <section id="contact" data-spy class="scroll-mt-36 bg-ink text-paper">
+    <div class="mx-auto max-w-site px-4 py-20">
+      <p class="text-xs uppercase tracking-[0.25em] text-brass">Contact</p>
+      <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Come by, call, or message us.</h2>
+      <div class="mt-12 grid gap-10 md:grid-cols-2">
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-sm uppercase tracking-[0.2em] text-brass">Address</h3>
+            <p class="mt-2 text-paper/85">{site.address.line}</p>
+            <p class="text-paper/85">{site.address.city}, {site.address.region} {site.address.postalCode}</p>
+            <a href={site.mapsUrl} target="_blank" rel="noopener" class="mt-3 inline-block text-sm text-brass underline underline-offset-4">Get directions</a>
+          </div>
+          <div>
+            <h3 class="text-sm uppercase tracking-[0.2em] text-brass">Phone and WhatsApp</h3>
+            <p class="mt-2"><a href={`tel:${site.phone}`} class="text-paper hover:text-brass">{site.phoneDisplay}</a></p>
+            <a href={whatsappLink()} target="_blank" rel="noopener" class="mt-4 inline-block rounded-full bg-brass px-6 py-3 text-sm font-semibold text-ink transition hover:bg-brass-deep">Message on WhatsApp</a>
+          </div>
+          <div>
+            <h3 class="text-sm uppercase tracking-[0.2em] text-brass">Hours</h3>
+            <p class="mt-2 text-paper/85">{site.hours}</p>
+            <p class="text-paper/85">{site.closedDay}</p>
+            <p class="mt-2 text-brass">{site.towing}</p>
+          </div>
+        </div>
+        <iframe
+          title="Map of Sanju Maruti Services, Anturli Road, Pachora"
+          src={mapEmbedUrl}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="min-h-80 w-full flex-1 rounded-2xl border-0 grayscale-[30%]"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-paper">
     <div class="mx-auto flex max-w-site flex-col items-start gap-6 px-4 py-16 md:flex-row md:items-center md:justify-between">
       <div>
-        <h2 class="text-3xl font-semibold md:text-4xl">Your car deserves a workshop that explains everything.</h2>
-        <p class="mt-3 text-paper/80">Serving Jalgaon, Bhadgaon, Pachora and Chalisgaon.</p>
+        <h2 class="text-2xl font-semibold md:text-3xl">Your car deserves a workshop that explains everything.</h2>
+        <p class="mt-2 text-muted">Serving Jalgaon, Bhadgaon, Pachora and Chalisgaon.</p>
       </div>
-      <div class="flex flex-wrap gap-3">
-        <a href={whatsappLink()} target="_blank" rel="noopener" class="rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep">Book on WhatsApp</a>
-        <a href={`tel:${site.phone}`} class="rounded-full border border-paper/40 px-6 py-3 font-semibold hover:border-brass hover:text-brass">Call now</a>
-      </div>
+      <a href={whatsappLink()} target="_blank" rel="noopener" class="rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-ink transition hover:bg-brass-deep">Book on WhatsApp</a>
     </div>
   </section>
 </Layout>
