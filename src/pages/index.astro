@@ -3,10 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import { site, whatsappLink } from '../data/site';
 
 const photos = [
-  { src: '/images/workshop-restoration.jpg', alt: 'Car restoration workshop' },
-  { src: '/images/mechanic-workbench.jpg', alt: 'Mechanic workbench with tools' },
-  { src: '/images/car-wash.jpg', alt: 'Car being washed' },
-  { src: '/images/repair-garage.jpg', alt: 'Car repair garage' },
+  { src: '/images/shop-signboard.webp', alt: 'Sanju Maruti Services signboard with Tata Motors original parts board' },
+  { src: '/images/shop-front-wide.webp', alt: 'Sanju Maruti Services workshop front with cars parked outside' },
+  { src: '/images/shop-front-tata.webp', alt: 'Sanju Maruti Services shop front' },
+  { src: '/images/shop-balloon-sign.webp', alt: 'Sanju Maruti Services entrance with decorated arch' },
 ];
 ---
 
@@ -45,14 +45,13 @@ const photos = [
           <img
             src={photo.src}
             alt={photo.alt}
-            width="1280"
-            height="960"
+            width="1360"
+            height="740"
             loading="lazy"
             class="aspect-[4/3] w-full object-cover"
           />
         </figure>
       ))}
     </div>
-    <p class="mt-3 text-xs text-muted">Stock images shown until our own workshop photos are added.</p>
-  </section>
+      </section>
 </Layout>
