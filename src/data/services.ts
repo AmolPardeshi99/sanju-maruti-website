@@ -46,6 +46,7 @@ export const services: Service[] = [
     name: 'Tyres & wheel alignment',
     summary: 'Smoother rides, even tyre wear and safer handling.',
     detail: 'Tyre fitting, balancing, wheel alignment and rotation. Alignment checks help your car drive straight and save tyres.',
+    featured: true,
   },
   {
     slug: 'battery',
