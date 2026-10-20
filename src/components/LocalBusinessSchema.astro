@@ -1,0 +1,35 @@
+---
+import { site, openingHours } from '../data/site';
+
+const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const openDays = dayNames.filter((_, i) => !openingHours.closedWeekdays.includes(i));
+const pad = (h: number) => `${String(h).padStart(2, '0')}:00`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'AutoRepair',
+  name: site.name,
+  url: site.url,
+  telephone: site.phone,
+  image: `${site.url}/images/shop-signboard.webp`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.line,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  areaServed: site.areas.map((name) => ({ '@type': 'City', name })),
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: openDays,
+      opens: pad(openingHours.openHour),
+      closes: pad(openingHours.closeHour),
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
