@@ -100,7 +100,8 @@ import { site, whatsappLink, openingHours } from '../data/site';
     if (!hours) {
       timeSelect.disabled = true;
       timeSelect.add(new Option('Closed on this day', ''));
-      showError(`Sorry, we are closed on ${labelDate(date)}. Please pick another day.`);
+      dateInput.value = '';
+      showError(`We are closed on ${labelDate(date)}. Please pick a day Monday to Saturday.`);
       return;
     }
     const today = istNow();
@@ -127,9 +128,8 @@ import { site, whatsappLink, openingHours } from '../data/site';
   const setup = () => {
     const today = istNow().date;
     dateInput.min = today;
-    hoursLabel.textContent = cfg.closedWeekdays.length
-      ? `${clock(cfg.openHour)} – ${clock(cfg.closeHour)}, closed ${cfg.closedWeekdays.map((d) => dayNames[d]).join(', ')}`
-      : `${clock(cfg.openHour)} – ${clock(cfg.closeHour)}, every day`;
+    const closedDays = cfg.closedWeekdays.map((d) => (d === 0 ? 'Sundays' : dayNames[d] + 's')).join(', ');
+    hoursLabel.textContent = `${clock(cfg.openHour)} – ${clock(cfg.closeHour)}. Closed ${closedDays}${cfg.holidays.length ? ' and holidays' : ''}.`;
   };
 
   dateInput.addEventListener('change', fillTimes);

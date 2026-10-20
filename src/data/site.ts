@@ -41,7 +41,7 @@ export const openingHours = {
   timeZone: 'Asia/Kolkata',
   openHour: 9,
   closeHour: 18,
-  closedWeekdays: [0], // 0 = Sunday, 1 = Monday ... 6 = Saturday
+  closedWeekdays: [0], // Sundays are closed. 0 = Sunday, 1 = Monday ... 6 = Saturday
   slotMinutes: 60, // length of one bookable time slot
   holidays: [] as string[], // fully closed dates, e.g. ['2026-11-04']
   overrides: {} as Record<string, { open: number; close: number } | 'closed'>, // special days, e.g. { '2026-10-31': { open: 10, close: 14 } }
