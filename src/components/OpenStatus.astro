@@ -1,0 +1,49 @@
+---
+import { openingHours } from '../data/site';
+// Text is filled in by the script below; the server fallback reads fine without JavaScript.
+---
+<span data-open-status class="inline-flex items-center gap-2 whitespace-nowrap text-xs font-medium text-paper/80">
+  <span data-open-dot class="h-2 w-2 rounded-full bg-paper/40"></span>
+  <span data-open-text>Mon–Sat 9 AM – 6 PM</span>
+</span>
+
+<script define:vars={{ hours: JSON.stringify(openingHours) }}>
+  const config = JSON.parse(hours);
+  const root = document.querySelector('[data-open-status]');
+  const dot = root.querySelector('[data-open-dot]');
+  const text = root.querySelector('[data-open-text]');
+  const names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const fmt = (h) => (h === 12 ? '12 PM' : h > 12 ? `${h - 12} PM` : `${h} AM`);
+
+  const local = () => {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: config.timeZone, weekday: 'short', hour: 'numeric', hourCycle: 'h23',
+    }).formatToParts(new Date());
+    return {
+      day: names.indexOf(parts.find((p) => p.type === 'weekday').value),
+      hour: Number(parts.find((p) => p.type === 'hour').value),
+    };
+  };
+
+  const update = () => {
+    const { day, hour } = local();
+    const closed = (d) => config.closedWeekdays.includes(d);
+    if (!closed(day) && hour >= config.openHour && hour < config.closeHour) {
+      text.textContent = `Open · till ${fmt(config.closeHour)}`;
+      dot.className = 'h-2 w-2 rounded-full bg-emerald-400';
+      return;
+    }
+    let next = null;
+    for (let k = 0; k < 8 && next === null; k++) {
+      const d = (day + k) % 7;
+      if (k === 0 && (closed(d) || hour >= config.openHour)) continue;
+      if (!closed(d)) next = { d, k };
+    }
+    const label = next.k === 0 ? 'today' : next.k === 1 ? 'tomorrow' : names[next.d];
+    text.textContent = `Closed · opens ${label} ${fmt(config.openHour)}`;
+    dot.className = 'h-2 w-2 rounded-full bg-paper/40';
+  };
+
+  update();
+  setInterval(update, 60000);
+</script>

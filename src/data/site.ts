@@ -34,3 +34,11 @@ export const navItems = [
   { id: 'gallery', label: 'Gallery' },
   { id: 'contact', label: 'Contact' },
 ] as const;
+
+// Used by the open/closed badge. Hours are in local (IST) time.
+export const openingHours = {
+  timeZone: 'Asia/Kolkata',
+  openHour: 9,
+  closeHour: 18,
+  closedWeekdays: [0], // 0 = Sunday
+} as const;
