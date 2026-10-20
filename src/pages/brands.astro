@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { whatsappLink, site } from '../data/site';
+---
+
+<Layout title="Brands | Sanju Maruti Services" description="Multi-brand car service in Jalgaon, including luxury brands. Ask about your car on WhatsApp.">
+  <section class="mx-auto max-w-site px-4 py-16">
+    <h1 class="text-4xl font-semibold md:text-5xl">Brands we service</h1>
+    <p class="mt-4 max-w-2xl text-muted">We service cars from mass-market to luxury brands. Send us your car's make and model and we will confirm what we can do.</p>
+
+    <div class="mt-10 rounded-xl border border-brass/40 bg-white p-6">
+      <p class="font-semibold">Full brand list coming soon.</p>
+      <p class="mt-2 text-sm text-muted">Call {site.phoneDisplay} or message on WhatsApp with your car's make and model.</p>
+    </div>
+
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href={whatsappLink('Hi, I want to check service for my car. Make and model: ')} target="_blank" rel="noopener" class="rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep">Ask on WhatsApp</a>
+      <a href={`tel:${site.phone}`} class="rounded-full border border-ink px-6 py-3 font-semibold hover:bg-ink hover:text-paper">Call now</a>
+    </div>
+  </section>
+</Layout>

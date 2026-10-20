@@ -25,7 +25,5 @@ export const navItems = [
   { href: '/services', label: 'Services' },
   { href: '/brands', label: 'Brands' },
   { href: '/pricing', label: 'Pricing' },
-  { href: '/car-compare', label: 'Car Compare' },
-  { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ] as const;

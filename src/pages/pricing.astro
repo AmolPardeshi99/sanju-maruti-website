@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { whatsappLink, site } from '../data/site';
+---
+
+<Layout title="Pricing | Sanju Maruti Services" description="Transparent car service pricing. Get a quote after inspection, approved before any work starts.">
+  <section class="mx-auto max-w-site px-4 py-16">
+    <h1 class="text-4xl font-semibold md:text-5xl">Pricing</h1>
+    <p class="mt-4 max-w-2xl text-muted">Prices depend on your car's make, model and the work needed. We inspect first and give you a quote before starting.</p>
+
+    <div class="mt-10 rounded-xl border border-ink/10 bg-white p-6">
+      <p class="font-semibold">Price list coming soon.</p>
+      <p class="mt-2 text-sm text-muted">Starting prices for each service will be listed here. Ask on WhatsApp or call for a quote for your car.</p>
+    </div>
+
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href={whatsappLink('Hi, I would like a price quote.')} target="_blank" rel="noopener" class="rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep">Get a quote on WhatsApp</a>
+      <a href={`tel:${site.phone}`} class="rounded-full border border-ink px-6 py-3 font-semibold hover:bg-ink hover:text-paper">Call now</a>
+    </div>
+  </section>
+</Layout>
