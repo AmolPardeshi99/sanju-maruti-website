@@ -35,18 +35,20 @@ const trust = [
   <section id="top" class="relative overflow-hidden bg-ink text-paper">
     <div class="mx-auto grid max-w-site items-center gap-12 px-4 py-20 md:grid-cols-2 md:py-28">
       <div>
-        <p class="hero-rise text-xs uppercase tracking-[0.25em] text-brass">Pachora</p>
-        <h1 class="hero-rise hero-rise-2 mt-5 text-4xl font-semibold leading-[1.08] md:text-6xl">Premium care for every car, every brand.</h1>
+        <p class="hairline inline-block text-xs uppercase tracking-[0.25em] text-brass">Pachora</p>
+        <h1 class="mt-5 text-4xl font-semibold leading-[1.08] md:text-6xl">
+          <span class="word" style={`--i:0`}>Premium</span> <span class="word" style={`--i:1`}>care</span> <span class="word" style={`--i:2`}>for</span> <span class="word" style={`--i:3`}>every</span> <span class="word" style={`--i:4`}>car,</span> <span class="word" style={`--i:5`}>every</span> <span class="word" style={`--i:6`}>brand.</span>
+        </h1>
         <p class="hero-rise hero-rise-3 mt-6 max-w-md text-base leading-relaxed text-paper/75 md:text-lg">
           Service, washing, detailing and ceramic coating for everyday cars and luxury models, from our workshop on Anturli Road, Pachora.
         </p>
         <div class="hero-rise hero-rise-4 mt-10 flex flex-wrap gap-3">
-          <a href={whatsappLink()} target="_blank" rel="noopener" class="lift rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-ink transition hover:bg-brass-deep">Book on WhatsApp</a>
+          <a href={whatsappLink()} target="_blank" rel="noopener" class="wipe rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-ink">Book on WhatsApp</a>
           <a href={`tel:${site.phone}`} class="rounded-full border border-paper/30 px-7 py-3.5 text-sm font-semibold text-paper transition hover:border-brass hover:text-brass">Call {site.phoneDisplay}</a>
         </div>
       </div>
       <figure class="hero-unveil relative overflow-hidden rounded-2xl">
-        <img src="/images/shop-signboard.webp" alt="Sanju Maruti Services signboard on Anturli Road, Pachora" width="1360" height="726" class="hero-settle aspect-[4/3] w-full object-cover shadow-2xl" />
+        <img src="/images/shop-signboard.webp" alt="Sanju Maruti Services signboard on Anturli Road, Pachora" width="1360" height="726" data-parallax class="hero-settle aspect-[4/3] w-full object-cover shadow-2xl" />
         <figcaption class="absolute bottom-4 left-4 rounded-full bg-ink/80 px-4 py-2 text-xs text-paper/90 backdrop-blur">Visit us on Anturli Road, Jargaon</figcaption>
       </figure>
     </div>
@@ -61,13 +63,13 @@ const trust = [
   <section id="services" data-spy class="scroll-mt-44 bg-paper">
     <div class="mx-auto max-w-site px-4 py-20" data-reveal>
       <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">Services</p>
-      <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Everything your car needs, in one place.</h2>
+      <h2 class="mt-3 text-3xl font-semibold md:text-4xl"><span class="mask"><span class="mask-line">Everything your car needs, in one place.</span></span></h2>
       <p class="mt-4 max-w-2xl text-muted">From routine service to coating and repairs, handled by a team that treats every car like its own.</p>
 
       <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((s) => (
           <li>
-            <a href={`/services/${s.slug}`} class="lift group block h-full rounded-2xl border border-ink/10 bg-white p-6 hover:border-brass">
+            <a href={`/services/${s.slug}`} class="lift edge group relative block h-full rounded-2xl border border-ink/10 bg-white p-6 hover:border-brass">
               <h3 class="text-xl font-semibold">{s.name}</h3>
               <p class="mt-2 text-sm leading-relaxed text-muted">{s.summary}</p>
               <p class="mt-5 text-sm font-medium text-brass-deep">Quote after inspection →</p>
@@ -81,7 +83,7 @@ const trust = [
   <section id="brands" data-spy class="scroll-mt-44 bg-white">
     <div class="mx-auto max-w-site px-4 py-20" data-reveal>
       <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">Brands</p>
-      <h2 class="mt-3 text-3xl font-semibold md:text-4xl">One workshop for every badge on the road.</h2>
+      <h2 class="mt-3 text-3xl font-semibold md:text-4xl"><span class="mask"><span class="mask-line">One workshop for every badge on the road.</span></span></h2>
       <p class="mt-4 max-w-2xl text-muted">From the car you drive every day to the luxury model you are proud of. Not sure your brand is listed? Ask us.</p>
 
       <div class="mt-12 space-y-14">
@@ -108,7 +110,7 @@ const trust = [
   <section class="bg-paper">
     <div class="mx-auto max-w-site px-4 py-20" data-reveal>
       <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">How it works</p>
-      <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Simple, from first message to finished car.</h2>
+      <h2 class="mt-3 text-3xl font-semibold md:text-4xl"><span class="mask"><span class="mask-line">Simple, from first message to finished car.</span></span></h2>
       <ol class="mt-12 grid gap-6 md:grid-cols-4">
         {steps.map((step, i) => (
           <li class="rounded-2xl bg-white p-6 shadow-sm">
@@ -124,7 +126,7 @@ const trust = [
   <section id="gallery" data-spy class="scroll-mt-44 bg-white">
     <div class="mx-auto max-w-site px-4 py-20" data-reveal>
       <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">Gallery</p>
-      <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Our workshop, Anturli Road.</h2>
+      <h2 class="mt-3 text-3xl font-semibold md:text-4xl"><span class="mask"><span class="mask-line">Our workshop, Anturli Road.</span></span></h2>
       <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {photos.map((photo) => (
           <figure class="overflow-hidden rounded-2xl bg-ink-2">
@@ -138,7 +140,7 @@ const trust = [
   <section id="contact" data-spy class="scroll-mt-44 bg-ink text-paper">
     <div class="mx-auto max-w-site px-4 py-20" data-reveal>
       <p class="text-xs uppercase tracking-[0.25em] text-brass">Contact</p>
-      <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Come by, call, or message us.</h2>
+      <h2 class="mt-3 text-3xl font-semibold md:text-4xl"><span class="mask"><span class="mask-line">Come by, call, or message us.</span></span></h2>
       <div class="mt-12" data-reveal>
         <BookingForm />
       </div>
@@ -176,10 +178,26 @@ const trust = [
   <section class="bg-paper">
     <div class="mx-auto flex max-w-site flex-col items-start gap-6 px-4 py-16 md:flex-row md:items-center md:justify-between">
       <div>
-        <h2 class="text-2xl font-semibold md:text-3xl">Your car deserves a workshop that explains everything.</h2>
+        <h2 class="text-2xl font-semibold md:text-3xl"><span class="mask"><span class="mask-line">Your car deserves a workshop that explains everything.</span></span></h2>
         <p class="mt-2 text-muted">Serving Pachora and nearby.</p>
       </div>
-      <a href={whatsappLink()} target="_blank" rel="noopener" class="rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-ink transition hover:bg-brass-deep">Book on WhatsApp</a>
+      <a href={whatsappLink()} target="_blank" rel="noopener" class="wipe rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-ink">Book on WhatsApp</a>
     </div>
   </section>
+
+<script>
+  const photo = document.querySelector('[data-parallax]');
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (photo && !still) {
+    let ticking = false;
+    const move = () => {
+      ticking = false;
+      const offset = Math.min(window.scrollY, 600) * 0.06;
+      photo.style.transform = `translateY(${offset}px) scale(1.06)`;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(move); }
+    }, { passive: true });
+  }
+</script>
 </Layout>
