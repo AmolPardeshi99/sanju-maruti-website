@@ -1,21 +1,38 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { whatsappLink, site } from '../data/site';
+import { brandGroups } from '../data/brands';
 ---
 
-<Layout title="Brands | Sanju Maruti Services" description="Multi-brand car service in Jalgaon, including luxury brands. Ask about your car on WhatsApp.">
+<Layout title="Brands | Sanju Maruti Services" description="Multi-brand car service in Jalgaon, from everyday hatchbacks to luxury SUVs and electric cars. Ask about your make and model on WhatsApp.">
   <section class="mx-auto max-w-site px-4 py-16">
-    <h1 class="text-4xl font-semibold md:text-5xl">Brands we service</h1>
-    <p class="mt-4 max-w-2xl text-muted">We service cars from mass-market to luxury brands. Send us your car's make and model and we will confirm what we can do.</p>
+    <p class="text-sm uppercase tracking-[0.2em] text-brass-deep">Brands</p>
+    <h1 class="mt-2 text-4xl font-semibold md:text-5xl">One workshop for every badge on the road.</h1>
+    <p class="mt-4 max-w-2xl text-muted">From the car you drive every day to the luxury model you are proud of, we look after it with the same care. Not sure your brand is listed? Ask us.</p>
 
-    <div class="mt-10 rounded-xl border border-brass/40 bg-white p-6">
-      <p class="font-semibold">Full brand list coming soon.</p>
-      <p class="mt-2 text-sm text-muted">Call {site.phoneDisplay} or message on WhatsApp with your car's make and model.</p>
+    <div class="mt-12 space-y-12">
+      {brandGroups.map((group) => (
+        <div>
+          <h2 class="text-2xl font-semibold">{group.segment}</h2>
+          <p class="mt-1 text-muted">{group.blurb}</p>
+          <ul class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {group.brands.map((brand) => (
+              <li class="flex min-h-16 items-center justify-center rounded-xl border border-ink/10 bg-white px-4 py-3 text-center font-medium">{brand}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
 
-    <div class="mt-10 flex flex-wrap gap-3">
-      <a href={whatsappLink('Hi, I want to check service for my car. Make and model: ')} target="_blank" rel="noopener" class="rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep">Ask on WhatsApp</a>
-      <a href={`tel:${site.phone}`} class="rounded-full border border-ink px-6 py-3 font-semibold hover:bg-ink hover:text-paper">Call now</a>
+    <div class="mt-16 rounded-xl bg-ink p-8 text-paper md:flex md:items-center md:justify-between">
+      <div>
+        <p class="text-lg font-semibold">Your brand is not listed?</p>
+        <p class="mt-1 text-paper/70">Message us the make and model. We will tell you what we can do.</p>
+      </div>
+      <div class="mt-4 flex gap-3 md:mt-0">
+        <a href={whatsappLink('Hi, I want to check service for my car. Make and model: ')} target="_blank" rel="noopener" class="rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep">Ask on WhatsApp</a>
+        <a href={`tel:${site.phone}`} class="rounded-full border border-paper/40 px-6 py-3 font-semibold hover:border-brass hover:text-brass">Call</a>
+      </div>
     </div>
   </section>
 </Layout>

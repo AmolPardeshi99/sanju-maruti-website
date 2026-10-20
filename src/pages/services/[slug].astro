@@ -17,6 +17,7 @@ if (!service) throw new Error(`Unknown service: ${Astro.params.slug}`);
     <a href="/services" class="text-sm text-muted hover:text-brass">← All services</a>
     <h1 class="mt-4 text-4xl font-semibold md:text-5xl">{service.name}</h1>
     <p class="mt-4 max-w-2xl text-lg text-muted">{service.summary}</p>
+    <p class="mt-6 max-w-2xl leading-relaxed">{service.detail}</p>
     <div class="mt-6"><PriceNote /></div>
     <div class="mt-10 flex flex-wrap gap-3">
       <a href={whatsappLink(`Hi, I want to book: ${service.name}.`)} target="_blank" rel="noopener" class="rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep">Book on WhatsApp</a>

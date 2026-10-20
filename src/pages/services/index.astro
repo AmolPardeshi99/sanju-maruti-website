@@ -5,10 +5,11 @@ import { services } from '../../data/services';
 import { whatsappLink } from '../../data/site';
 ---
 
-<Layout title="Services | Sanju Maruti Services" description="Periodic service, AC, denting-painting, car wash, ceramic coating, tyres, battery, engine and towing for all brands.">
+<Layout title="Services | Sanju Maruti Services" description="Periodic service, AC, denting and painting, car wash, ceramic coating, tyres, battery, engine repair and towing for every brand.">
   <section class="mx-auto max-w-site px-4 py-16">
-    <h1 class="text-4xl font-semibold md:text-5xl">Our services</h1>
-    <p class="mt-4 max-w-2xl text-muted">Service for every brand, from routine maintenance to coating and repairs.</p>
+    <p class="text-sm uppercase tracking-[0.2em] text-brass-deep">Services</p>
+    <h1 class="mt-2 text-4xl font-semibold md:text-5xl">Everything your car needs, in one place.</h1>
+    <p class="mt-4 max-w-2xl text-muted">From routine service to coating and repairs, handled by a team that treats every car like its own.</p>
 
     <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {services.map((s) => (
@@ -22,8 +23,9 @@ import { whatsappLink } from '../../data/site';
       ))}
     </ul>
 
-    <div class="mt-12">
-      <a href={whatsappLink('Hi, I want to ask about a service.')} target="_blank" rel="noopener" class="rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep">Ask on WhatsApp</a>
+    <div class="mt-12 rounded-xl bg-ink p-8 text-paper md:flex md:items-center md:justify-between">
+      <p class="text-lg">Not sure which service your car needs? Tell us the make, model and what you've noticed.</p>
+      <a href={whatsappLink('Hi, I am not sure which service my car needs. Make and model: ')} target="_blank" rel="noopener" class="mt-4 inline-block rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep md:mt-0">Ask on WhatsApp</a>
     </div>
   </section>
 </Layout>

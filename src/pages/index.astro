@@ -1,12 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PriceNote from '../components/PriceNote.astro';
 import { site, whatsappLink } from '../data/site';
+import { featuredServices } from '../data/services';
 
 const photos = [
   { src: '/images/shop-signboard.webp', alt: 'Sanju Maruti Services signboard with Tata Motors original parts board' },
   { src: '/images/shop-front-wide.webp', alt: 'Sanju Maruti Services workshop front with cars parked outside' },
   { src: '/images/shop-front-tata.webp', alt: 'Sanju Maruti Services shop front' },
   { src: '/images/shop-balloon-sign.webp', alt: 'Sanju Maruti Services entrance with decorated arch' },
+];
+
+const steps = [
+  { title: 'Reach out', text: 'Message us on WhatsApp or call with your car’s make and model.' },
+  { title: 'Bring it in', text: 'Drop your car at our Anturli Road workshop, or we can pick it up.' },
+  { title: 'Get a clear quote', text: 'We inspect the car and explain the work before we start.' },
+  { title: 'Drive away', text: 'You approve the work, we finish on time, and the car comes back clean.' },
+];
+
+const trust = [
+  'About 20 years in Pachora',
+  'Every brand, including luxury',
+  'Towing available',
+  'Mon–Sat, 9 AM – 6 PM',
 ];
 ---
 
@@ -18,10 +34,10 @@ const photos = [
     <div class="mx-auto max-w-site px-4 py-20 md:py-28">
       <p class="text-sm uppercase tracking-[0.2em] text-brass">Jalgaon · Pachora · Chalisgaon · Bhadgaon</p>
       <h1 class="mt-4 max-w-3xl text-4xl font-semibold leading-tight md:text-6xl">
-        Premium car care for every brand, including luxury.
+        Premium care for every car, every brand.
       </h1>
       <p class="mt-6 max-w-xl text-lg text-paper/80">
-        Periodic service, washing, detailing and ceramic coating, with transparent pricing and a quote before any work starts.
+        Service, washing, detailing and ceramic coating for everyday cars and luxury models, from our workshop on Anturli Road, Pachora.
       </p>
       <div class="mt-10 flex flex-wrap gap-3">
         <a href={whatsappLink()} target="_blank" rel="noopener" class="rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep">
@@ -34,24 +50,71 @@ const photos = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-site px-4 py-16">
-    <p class="text-sm text-muted">Phase 0 placeholder. Services, brands, pricing and reviews come in Phase 1 and 2.</p>
+  <section class="border-b border-ink/10 bg-white">
+    <ul class="mx-auto grid max-w-site grid-cols-2 gap-4 px-4 py-6 text-sm font-medium md:grid-cols-4">
+      {trust.map((item) => <li class="flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-brass"></span>{item}</li>)}
+    </ul>
   </section>
 
-  <section class="mx-auto max-w-site px-4 pb-16">
+  <section class="mx-auto max-w-site px-4 py-16">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="text-sm uppercase tracking-[0.2em] text-brass-deep">Services</p>
+        <h2 class="mt-2 text-3xl font-semibold md:text-4xl">What we do best</h2>
+      </div>
+      <a href="/services" class="text-sm font-semibold text-brass-deep underline">See all services</a>
+    </div>
+
+    <ul class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {featuredServices.map((s) => (
+        <li>
+          <a href={`/services/${s.slug}`} class="block h-full rounded-xl border border-ink/10 bg-white p-6 transition hover:border-brass">
+            <h3 class="text-xl font-semibold">{s.name}</h3>
+            <p class="mt-2 text-sm text-muted">{s.summary}</p>
+            <div class="mt-4"><PriceNote /></div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="bg-paper">
+    <div class="mx-auto max-w-site px-4 py-16">
+      <p class="text-sm uppercase tracking-[0.2em] text-brass-deep">How it works</p>
+      <h2 class="mt-2 text-3xl font-semibold md:text-4xl">Simple, from first message to finished car</h2>
+      <ol class="mt-10 grid gap-6 md:grid-cols-4">
+        {steps.map((step, i) => (
+          <li class="rounded-xl bg-white p-6">
+            <span class="font-display text-3xl text-brass-deep">0{i + 1}</span>
+            <h3 class="mt-3 text-lg font-semibold">{step.title}</h3>
+            <p class="mt-2 text-sm text-muted">{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-site px-4 py-16">
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {photos.map((photo) => (
         <figure class="overflow-hidden rounded-xl bg-ink-2">
-          <img
-            src={photo.src}
-            alt={photo.alt}
-            width="1360"
-            height="740"
-            loading="lazy"
-            class="aspect-[4/3] w-full object-cover"
-          />
+          <img src={photo.src} alt={photo.alt} width="1360" height="740" loading="lazy" class="aspect-[4/3] w-full object-cover" />
         </figure>
       ))}
     </div>
-      </section>
+    <p class="mt-3 text-sm text-muted">Our workshop on Anturli Road, Jargaon, Pachora.</p>
+  </section>
+
+  <section class="bg-ink text-paper">
+    <div class="mx-auto flex max-w-site flex-col items-start gap-6 px-4 py-16 md:flex-row md:items-center md:justify-between">
+      <div>
+        <h2 class="text-3xl font-semibold md:text-4xl">Your car deserves a workshop that explains everything.</h2>
+        <p class="mt-3 text-paper/80">Serving Jalgaon, Bhadgaon, Pachora and Chalisgaon.</p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a href={whatsappLink()} target="_blank" rel="noopener" class="rounded-full bg-brass px-6 py-3 font-semibold text-ink hover:bg-brass-deep">Book on WhatsApp</a>
+        <a href={`tel:${site.phone}`} class="rounded-full border border-paper/40 px-6 py-3 font-semibold hover:border-brass hover:text-brass">Call now</a>
+      </div>
+    </div>
+  </section>
 </Layout>

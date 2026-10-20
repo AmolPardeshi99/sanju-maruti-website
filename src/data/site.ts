@@ -5,9 +5,10 @@ export const site = {
   phoneDisplay: '+91 99750 49393',
   whatsapp: '919975049393',
   address: {
-    line: 'Jargaon Crossing, near Hindustan Tyre, Pachora Road',
-    city: 'Jalgaon',
+    line: 'Anturli Rd, Jargaon',
+    city: 'Pachora',
     region: 'Maharashtra',
+    postalCode: '424201',
     country: 'IN',
   },
   areas: ['Jalgaon', 'Bhadgaon', 'Pachora', 'Chalisgaon'],
@@ -15,7 +16,7 @@ export const site = {
   closedDay: 'Sunday: Closed',
   towing: 'Towing service available',
   // TODO: replace with Google Maps directions URL once verified
-  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Sanju+Maruti+Services+Jalgaon',
+  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Sanju+Maruti+Services,+Anturli+Rd,+Jargaon,+Pachora,+Maharashtra+424201',
 } as const;
 
 export const whatsappLink = (message = `Hi, I'd like to book a service at ${site.name}.`) =>
@@ -24,6 +25,5 @@ export const whatsappLink = (message = `Hi, I'd like to book a service at ${site
 export const navItems = [
   { href: '/services', label: 'Services' },
   { href: '/brands', label: 'Brands' },
-  { href: '/pricing', label: 'Pricing' },
   { href: '/contact', label: 'Contact' },
 ] as const;
