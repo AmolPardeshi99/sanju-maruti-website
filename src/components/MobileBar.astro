@@ -9,8 +9,9 @@ const items = [
 ---
 
 <nav
+  id="mobile-bar"
   aria-label="Quick actions"
-  class="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-white/10 bg-ink text-paper md:hidden"
+  class="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 border-t border-white/10 bg-ink text-paper transition duration-300 ease-out motion-reduce:transition-none md:hidden"
   style="padding-bottom: env(safe-area-inset-bottom);"
 >
   {items.map((item) => (
@@ -24,3 +25,19 @@ const items = [
     </a>
   ))}
 </nav>
+
+<script>
+  const bar = document.getElementById('mobile-bar');
+  const footer = document.querySelector('footer');
+  const hiddenClasses = ['translate-y-full', 'opacity-0', 'pointer-events-none'];
+
+  if (bar && footer && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        for (const cls of hiddenClasses) bar.classList.toggle(cls, entry.isIntersecting);
+      },
+      { threshold: 0.15 },
+    );
+    observer.observe(footer);
+  }
+</script>
