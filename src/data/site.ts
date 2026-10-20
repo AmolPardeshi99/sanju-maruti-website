@@ -11,7 +11,7 @@ export const site = {
     postalCode: '424201',
     country: 'IN',
   },
-  areas: ['Jalgaon', 'Bhadgaon', 'Pachora', 'Chalisgaon'],
+  areas: ['Pachora'],
   hours: 'Mon–Sat: 9:00 AM – 6:00 PM',
   closedDay: 'Sunday: Closed',
   towing: 'Towing service available',
