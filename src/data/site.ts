@@ -11,8 +11,9 @@ export const site = {
     country: 'IN',
   },
   areas: ['Jalgaon', 'Bhadgaon', 'Pachora', 'Chalisgaon'],
-  // TODO: replace with verified hours from Google Business Profile
-  hours: 'Hours to be confirmed',
+  hours: 'Mon–Sat: 9:00 AM – 6:00 PM',
+  closedDay: 'Sunday: Closed',
+  towing: 'Towing service available',
   // TODO: replace with Google Maps directions URL once verified
   mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Sanju+Maruti+Services+Jalgaon',
 } as const;
