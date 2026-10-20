@@ -19,7 +19,7 @@ import { brandGroups } from '../data/brands';
             {group.brands.map((brand) => (
               <li class="flex min-h-24 flex-col items-center justify-center gap-3 rounded-xl border border-ink/10 bg-white px-4 py-5 text-center">
                 {brand.logo ? (
-                  <img src={brand.logo} alt={`${brand.name} logo`} width="120" height="48" loading="lazy" class="h-10 w-auto max-w-[120px] object-contain grayscale transition hover:grayscale-0" />
+                  <img src={brand.logo} alt={`${brand.name} logo`} width="120" height="48" loading="lazy" class="h-10 w-auto max-w-[120px] object-contain transition duration-300 hover:scale-105" />
                 ) : null}
                 <span class={brand.logo ? 'text-sm font-medium text-muted' : 'py-3 font-semibold'}>{brand.name}</span>
               </li>
