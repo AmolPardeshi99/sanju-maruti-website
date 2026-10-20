@@ -35,10 +35,14 @@ export const navItems = [
   { id: 'contact', label: 'Contact' },
 ] as const;
 
-// Used by the open/closed badge. Hours are in local (IST) time.
+// Shop hours. Edit here to change the open/closed badge and the booking calendar.
+// Times are local (IST), 24-hour clock. Dates use YYYY-MM-DD.
 export const openingHours = {
   timeZone: 'Asia/Kolkata',
   openHour: 9,
   closeHour: 18,
-  closedWeekdays: [0], // 0 = Sunday
-} as const;
+  closedWeekdays: [0], // 0 = Sunday, 1 = Monday ... 6 = Saturday
+  slotMinutes: 60, // length of one bookable time slot
+  holidays: [] as string[], // fully closed dates, e.g. ['2026-11-04']
+  overrides: {} as Record<string, { open: number; close: number } | 'closed'>, // special days, e.g. { '2026-10-31': { open: 10, close: 14 } }
+};

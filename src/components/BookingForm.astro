@@ -1,11 +1,11 @@
 ---
 import { services } from '../data/services';
-import { site, whatsappLink } from '../data/site';
+import { site, whatsappLink, openingHours } from '../data/site';
 ---
 
 <form data-booking class="rounded-2xl border border-paper/10 bg-ink-2 p-6 md:p-8" novalidate>
   <h3 class="text-xl font-semibold">Book in under a minute</h3>
-  <p class="mt-2 text-sm text-paper/70">Tell us what your car needs. We open WhatsApp with your request ready to send.</p>
+  <p class="mt-2 text-sm text-paper/70">Pick a day and time that suits you. We open WhatsApp with your request ready to send.</p>
 
   <div class="mt-6 grid gap-4 md:grid-cols-2">
     <label class="flex flex-col gap-2 text-sm">
@@ -22,18 +22,21 @@ import { site, whatsappLink } from '../data/site';
       <input name="car" required placeholder="e.g. Hyundai Creta" class="rounded-xl border border-paper/15 bg-ink px-4 py-3 text-paper placeholder:text-paper/40 focus:border-brass focus:outline-none" />
     </label>
 
-    <label class="flex flex-col gap-2 text-sm md:col-span-2">
-      <span class="font-medium text-paper/85">When would you like to come in? <span class="text-paper/50">(optional)</span></span>
-      <select name="when" class="rounded-xl border border-paper/15 bg-ink px-4 py-3 text-paper focus:border-brass focus:outline-none">
-        <option value="">Any time</option>
-        <option value="today">Today</option>
-        <option value="tomorrow">Tomorrow</option>
-        <option value="this week">This week</option>
+    <label class="flex flex-col gap-2 text-sm">
+      <span class="font-medium text-paper/85">Date</span>
+      <input name="date" type="date" required class="rounded-xl border border-paper/15 bg-ink px-4 py-3 text-paper [color-scheme:dark] focus:border-brass focus:outline-none" />
+    </label>
+
+    <label class="flex flex-col gap-2 text-sm">
+      <span class="font-medium text-paper/85">Time</span>
+      <select name="time" required disabled class="rounded-xl border border-paper/15 bg-ink px-4 py-3 text-paper focus:border-brass focus:outline-none disabled:opacity-50">
+        <option value="">Choose a date first</option>
       </select>
     </label>
   </div>
 
-  <p data-booking-error class="mt-4 hidden text-sm text-brass" role="alert">Please choose a service and enter your car's make and model.</p>
+  <p data-booking-error class="mt-4 hidden text-sm text-brass" role="alert"></p>
+  <p data-booking-note class="mt-4 text-xs text-paper/55">Opening hours: <span data-booking-hours></span></p>
 
   <div class="mt-6 flex flex-wrap items-center gap-4">
     <button type="submit" class="rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-ink transition hover:bg-brass-deep">Send request on WhatsApp</button>
@@ -41,25 +44,116 @@ import { site, whatsappLink } from '../data/site';
   </div>
 </form>
 
-<script define:vars={{ phone: site.whatsapp }}>
+<script define:vars={{ phone: site.whatsapp, config: JSON.stringify(openingHours) }}>
+  const cfg = JSON.parse(config);
   const form = document.querySelector('[data-booking]');
+  const dateInput = form.querySelector('input[name=date]');
+  const timeSelect = form.querySelector('select[name=time]');
   const error = form.querySelector('[data-booking-error]');
+  const hoursLabel = form.querySelector('[data-booking-hours]');
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  const clock = (h) => {
+    const hour = Math.floor(h);
+    const suffix = hour >= 12 ? 'PM' : 'AM';
+    const shown = hour % 12 === 0 ? 12 : hour % 12;
+    return `${shown}:00 ${suffix}`;
+  };
+
+  const istNow = () => {
+    const parts = new Intl.DateTimeFormat('en-CA', {
+      timeZone: cfg.timeZone, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+    }).formatToParts(new Date());
+    const get = (type) => parts.find((p) => p.type === type).value;
+    return { date: `${get('year')}-${get('month')}-${get('day')}`, minutes: Number(get('hour')) * 60 + Number(get('minute')) };
+  };
+
+  const hoursFor = (date) => {
+    const override = cfg.overrides[date];
+    if (override === 'closed' || cfg.holidays.includes(date)) return null;
+    if (override) return override;
+    const weekday = new Date(`${date}T00:00:00Z`).getUTCDay();
+    if (cfg.closedWeekdays.includes(weekday)) return null;
+    return { open: cfg.openHour, close: cfg.closeHour };
+  };
+
+  const labelDate = (date) => {
+    const d = new Date(`${date}T00:00:00Z`);
+    return `${dayNames[d.getUTCDay()]} ${d.getUTCDate()} ${monthNames[d.getUTCMonth()]}`;
+  };
+
+  const showError = (msg) => {
+    error.textContent = msg;
+    error.classList.toggle('hidden', !msg);
+  };
+
+  const fillTimes = () => {
+    timeSelect.innerHTML = '';
+    const date = dateInput.value;
+    if (!date) {
+      timeSelect.disabled = true;
+      timeSelect.add(new Option('Choose a date first', ''));
+      return;
+    }
+    const hours = hoursFor(date);
+    if (!hours) {
+      timeSelect.disabled = true;
+      timeSelect.add(new Option('Closed on this day', ''));
+      showError(`Sorry, we are closed on ${labelDate(date)}. Please pick another day.`);
+      return;
+    }
+    const today = istNow();
+    const earliest = date === today.date ? today.minutes : -1;
+    let added = 0;
+    for (let m = hours.open * 60; m + cfg.slotMinutes <= hours.close * 60; m += cfg.slotMinutes) {
+      if (m <= earliest) continue;
+      const value = `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+      timeSelect.add(new Option(clock(m / 60), value));
+      added++;
+    }
+    if (added === 0) {
+      timeSelect.disabled = true;
+      timeSelect.add(new Option('No slots left today', ''));
+      showError('No slots left for today. Please pick tomorrow or a later day.');
+      return;
+    }
+    timeSelect.disabled = false;
+    timeSelect.add(new Option('Choose a time', ''), 0);
+    timeSelect.selectedIndex = 0;
+    showError('');
+  };
+
+  const setup = () => {
+    const today = istNow().date;
+    dateInput.min = today;
+    hoursLabel.textContent = cfg.closedWeekdays.length
+      ? `${clock(cfg.openHour)} – ${clock(cfg.closeHour)}, closed ${cfg.closedWeekdays.map((d) => dayNames[d]).join(', ')}`
+      : `${clock(cfg.openHour)} – ${clock(cfg.closeHour)}, every day`;
+  };
+
+  dateInput.addEventListener('change', fillTimes);
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     const data = new FormData(form);
     const service = String(data.get('service') || '').trim();
     const car = String(data.get('car') || '').trim();
-    const when = String(data.get('when') || '').trim();
+    const date = String(data.get('date') || '');
+    const time = String(data.get('time') || '');
 
-    if (!service || !car) {
-      error.classList.remove('hidden');
-      return;
-    }
-    error.classList.add('hidden');
+    if (!service || !car) return showError("Please choose a service and enter your car's make and model.");
+    if (!date) return showError('Please pick a date.');
+    if (!time) return showError('Please pick a time.');
+    if (!hoursFor(date)) return showError(`Sorry, we are closed on ${labelDate(date)}.`);
+    if (date < istNow().date) return showError('Please pick today or a later date.');
+    showError('');
 
-    let message = `Hi, I would like to book ${service} for my ${car}.`;
-    if (when) message += ` Preferred time: ${when}.`;
+    const [h, m] = time.split(':').map(Number);
+    const when = `${labelDate(date)} at ${clock(h + m / 60)}`;
+    const message = `Hi, I would like to book ${service} for my ${car} on ${when}.`;
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
   });
+
+  setup();
 </script>

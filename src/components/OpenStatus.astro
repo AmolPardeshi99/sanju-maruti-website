@@ -19,28 +19,32 @@ import { openingHours } from '../data/site';
     const parts = new Intl.DateTimeFormat('en-GB', {
       timeZone: config.timeZone, weekday: 'short', hour: 'numeric', hourCycle: 'h23',
     }).formatToParts(new Date());
-    return {
-      day: names.indexOf(parts.find((p) => p.type === 'weekday').value),
-      hour: Number(parts.find((p) => p.type === 'hour').value),
-    };
+    const get = (type) => parts.find((p) => p.type === type).value;
+    const day = names.indexOf(get('weekday'));
+    const hour = Number(get('hour'));
+    const today = new Date(Date.now() + 5.5 * 3600 * 1000).toISOString().slice(0, 10);
+    return { day, hour, today };
   };
 
   const update = () => {
-    const { day, hour } = local();
+    const { day, hour, today } = local();
+    const override = config.overrides[today];
+    const todayClosed = override === 'closed' || config.holidays.includes(today);
+    const open = override && override !== 'closed' ? override : { open: config.openHour, close: config.closeHour };
     const closed = (d) => config.closedWeekdays.includes(d);
-    if (!closed(day) && hour >= config.openHour && hour < config.closeHour) {
-      text.textContent = `Open · till ${fmt(config.closeHour)}`;
+    if (!todayClosed && !closed(day) && hour >= open.open && hour < open.close) {
+      text.textContent = `Open · till ${fmt(open.close)}`;
       dot.className = 'h-2 w-2 rounded-full bg-emerald-400';
       return;
     }
     let next = null;
     for (let k = 0; k < 8 && next === null; k++) {
       const d = (day + k) % 7;
-      if (k === 0 && (closed(d) || hour >= config.openHour)) continue;
+      if (k === 0 && (todayClosed || closed(d) || hour >= open.open)) continue;
       if (!closed(d)) next = { d, k };
     }
     const label = next.k === 0 ? 'today' : next.k === 1 ? 'tomorrow' : names[next.d];
-    text.textContent = `Closed · opens ${label} ${fmt(config.openHour)}`;
+    text.textContent = `Closed · opens ${label} ${fmt(open.open)}`;
     dot.className = 'h-2 w-2 rounded-full bg-paper/40';
   };
 
