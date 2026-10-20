@@ -49,10 +49,7 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
         const observer = new IntersectionObserver(
           (entries) => {
             for (const entry of entries) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-in');
-                observer.unobserve(entry.target);
-              }
+              entry.target.classList.toggle('is-in', entry.isIntersecting);
             }
           },
           { threshold: 0.12 },
