@@ -20,7 +20,7 @@ const schema = {
     postalCode: site.address.postalCode,
     addressCountry: site.address.country,
   },
-  areaServed: site.areas.map((name) => ({ '@type': 'City', name })),
+  areaServed: [...site.areas, ...site.nearbyAreas].map((name) => ({ '@type': 'City', name })),
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',

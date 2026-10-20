@@ -12,6 +12,8 @@ export const site = {
     country: 'IN',
   },
   areas: ['Pachora'],
+  nearbyAreas: ['Jalgaon', 'Bhadgaon', 'Chalisgaon', 'Shirsoli'],
+  serviceRadiusKm: 50,
   hours: 'Mon–Sat: 9:00 AM – 6:00 PM',
   closedDay: 'Sunday: Closed',
   towing: 'Towing service available',
