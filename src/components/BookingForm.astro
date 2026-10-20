@@ -1,0 +1,65 @@
+---
+import { services } from '../data/services';
+import { site, whatsappLink } from '../data/site';
+---
+
+<form data-booking class="rounded-2xl border border-paper/10 bg-ink-2 p-6 md:p-8" novalidate>
+  <h3 class="text-xl font-semibold">Book in under a minute</h3>
+  <p class="mt-2 text-sm text-paper/70">Tell us what your car needs. We open WhatsApp with your request ready to send.</p>
+
+  <div class="mt-6 grid gap-4 md:grid-cols-2">
+    <label class="flex flex-col gap-2 text-sm">
+      <span class="font-medium text-paper/85">Service</span>
+      <select name="service" required class="rounded-xl border border-paper/15 bg-ink px-4 py-3 text-paper focus:border-brass focus:outline-none">
+        <option value="">Choose a service</option>
+        {services.map((s) => <option value={s.name}>{s.name}</option>)}
+        <option value="Not sure, please advise">Not sure, please advise</option>
+      </select>
+    </label>
+
+    <label class="flex flex-col gap-2 text-sm">
+      <span class="font-medium text-paper/85">Car make and model</span>
+      <input name="car" required placeholder="e.g. Hyundai Creta" class="rounded-xl border border-paper/15 bg-ink px-4 py-3 text-paper placeholder:text-paper/40 focus:border-brass focus:outline-none" />
+    </label>
+
+    <label class="flex flex-col gap-2 text-sm md:col-span-2">
+      <span class="font-medium text-paper/85">When would you like to come in? <span class="text-paper/50">(optional)</span></span>
+      <select name="when" class="rounded-xl border border-paper/15 bg-ink px-4 py-3 text-paper focus:border-brass focus:outline-none">
+        <option value="">Any time</option>
+        <option value="today">Today</option>
+        <option value="tomorrow">Tomorrow</option>
+        <option value="this week">This week</option>
+      </select>
+    </label>
+  </div>
+
+  <p data-booking-error class="mt-4 hidden text-sm text-brass" role="alert">Please choose a service and enter your car's make and model.</p>
+
+  <div class="mt-6 flex flex-wrap items-center gap-4">
+    <button type="submit" class="rounded-full bg-brass px-7 py-3.5 text-sm font-semibold text-ink transition hover:bg-brass-deep">Send request on WhatsApp</button>
+    <a href={whatsappLink()} target="_blank" rel="noopener" class="text-sm text-paper/70 underline underline-offset-4 hover:text-brass">Or just say hello</a>
+  </div>
+</form>
+
+<script define:vars={{ phone: site.whatsapp }}>
+  const form = document.querySelector('[data-booking]');
+  const error = form.querySelector('[data-booking-error]');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const service = String(data.get('service') || '').trim();
+    const car = String(data.get('car') || '').trim();
+    const when = String(data.get('when') || '').trim();
+
+    if (!service || !car) {
+      error.classList.remove('hidden');
+      return;
+    }
+    error.classList.add('hidden');
+
+    let message = `Hi, I would like to book ${service} for my ${car}.`;
+    if (when) message += ` Preferred time: ${when}.`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+  });
+</script>

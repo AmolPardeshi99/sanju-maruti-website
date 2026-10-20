@@ -18,6 +18,7 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
 <!doctype html>
 <html lang={lang}>
   <head>
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
@@ -42,5 +43,24 @@ const canonical = new URL(Astro.url.pathname, site.url).toString();
     </main>
     <Footer />
     <MobileBar />
+    <script>
+      const revealed = document.querySelectorAll('[data-reveal]');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.12 },
+        );
+        revealed.forEach((el) => observer.observe(el));
+      } else {
+        revealed.forEach((el) => el.classList.add('is-in'));
+      }
+    </script>
   </body>
 </html>

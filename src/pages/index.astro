@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { site, whatsappLink, mapEmbedUrl } from '../data/site';
 import { services } from '../data/services';
 import { brandGroups } from '../data/brands';
+import BookingForm from '../components/BookingForm.astro';
 
 const photos = [
   { src: '/images/shop-signboard.webp', alt: 'Sanju Maruti Services signboard with Tata Motors original parts board' },
@@ -57,8 +58,8 @@ const trust = [
     </ul>
   </section>
 
-  <section id="services" data-spy class="scroll-mt-36 bg-paper">
-    <div class="mx-auto max-w-site px-4 py-20">
+  <section id="services" data-spy class="scroll-mt-44 bg-paper">
+    <div class="mx-auto max-w-site px-4 py-20" data-reveal>
       <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">Services</p>
       <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Everything your car needs, in one place.</h2>
       <p class="mt-4 max-w-2xl text-muted">From routine service to coating and repairs, handled by a team that treats every car like its own.</p>
@@ -77,8 +78,8 @@ const trust = [
     </div>
   </section>
 
-  <section id="brands" data-spy class="scroll-mt-36 bg-white">
-    <div class="mx-auto max-w-site px-4 py-20">
+  <section id="brands" data-spy class="scroll-mt-44 bg-white">
+    <div class="mx-auto max-w-site px-4 py-20" data-reveal>
       <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">Brands</p>
       <h2 class="mt-3 text-3xl font-semibold md:text-4xl">One workshop for every badge on the road.</h2>
       <p class="mt-4 max-w-2xl text-muted">From the car you drive every day to the luxury model you are proud of. Not sure your brand is listed? Ask us.</p>
@@ -105,7 +106,7 @@ const trust = [
   </section>
 
   <section class="bg-paper">
-    <div class="mx-auto max-w-site px-4 py-20">
+    <div class="mx-auto max-w-site px-4 py-20" data-reveal>
       <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">How it works</p>
       <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Simple, from first message to finished car.</h2>
       <ol class="mt-12 grid gap-6 md:grid-cols-4">
@@ -120,8 +121,8 @@ const trust = [
     </div>
   </section>
 
-  <section id="gallery" data-spy class="scroll-mt-36 bg-white">
-    <div class="mx-auto max-w-site px-4 py-20">
+  <section id="gallery" data-spy class="scroll-mt-44 bg-white">
+    <div class="mx-auto max-w-site px-4 py-20" data-reveal>
       <p class="text-xs uppercase tracking-[0.25em] text-brass-deep">Gallery</p>
       <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Our workshop, Anturli Road.</h2>
       <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -134,10 +135,13 @@ const trust = [
     </div>
   </section>
 
-  <section id="contact" data-spy class="scroll-mt-36 bg-ink text-paper">
-    <div class="mx-auto max-w-site px-4 py-20">
+  <section id="contact" data-spy class="scroll-mt-44 bg-ink text-paper">
+    <div class="mx-auto max-w-site px-4 py-20" data-reveal>
       <p class="text-xs uppercase tracking-[0.25em] text-brass">Contact</p>
       <h2 class="mt-3 text-3xl font-semibold md:text-4xl">Come by, call, or message us.</h2>
+      <div class="mt-12" data-reveal>
+        <BookingForm />
+      </div>
       <div class="mt-12 grid gap-10 md:grid-cols-2">
         <div class="space-y-8">
           <div>
