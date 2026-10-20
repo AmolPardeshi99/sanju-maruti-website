@@ -17,7 +17,12 @@ import { brandGroups } from '../data/brands';
           <p class="mt-1 text-muted">{group.blurb}</p>
           <ul class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {group.brands.map((brand) => (
-              <li class="flex min-h-16 items-center justify-center rounded-xl border border-ink/10 bg-white px-4 py-3 text-center font-medium">{brand}</li>
+              <li class="flex min-h-24 flex-col items-center justify-center gap-3 rounded-xl border border-ink/10 bg-white px-4 py-5 text-center">
+                {brand.logo ? (
+                  <img src={brand.logo} alt={`${brand.name} logo`} width="120" height="48" loading="lazy" class="h-10 w-auto max-w-[120px] object-contain grayscale transition hover:grayscale-0" />
+                ) : null}
+                <span class={brand.logo ? 'text-sm font-medium text-muted' : 'py-3 font-semibold'}>{brand.name}</span>
+              </li>
             ))}
           </ul>
         </div>
