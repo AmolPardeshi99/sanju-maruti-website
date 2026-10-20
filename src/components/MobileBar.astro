@@ -30,14 +30,30 @@ const items = [
   const bar = document.getElementById('mobile-bar');
   const footer = document.querySelector('footer');
   const hiddenClasses = ['translate-y-full', 'opacity-0', 'pointer-events-none'];
+  const DEAD_ZONE = 120;
+  let hidden = false;
+  let frame = 0;
 
-  if (bar && footer && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        for (const cls of hiddenClasses) bar.classList.toggle(cls, entry.isIntersecting);
-      },
-      { threshold: 0.15 },
-    );
-    observer.observe(footer);
+  const setHidden = (next) => {
+    if (next === hidden) return;
+    hidden = next;
+    for (const cls of hiddenClasses) bar.classList.toggle(cls, hidden);
+  };
+
+  const update = () => {
+    frame = 0;
+    const top = footer.getBoundingClientRect().top;
+    if (top < window.innerHeight - DEAD_ZONE) setHidden(true);
+    else if (top > window.innerHeight) setHidden(false);
+  };
+
+  const onScroll = () => {
+    if (!frame) frame = requestAnimationFrame(update);
+  };
+
+  if (bar && footer) {
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
   }
 </script>
